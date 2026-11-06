@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="./code.js"></script>
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <!-- start body of container-->
+    <div class="container">
+      <h2>Currency Converter</h2>
+      <!-- Staring section of form-->
+      <form action="">
+        <div class="ammount">
+          <p>Enter Your Ammount</p>
+          <input value="" type="text" />
+        </div>
+        <!-- Dropdown Menus-->
+        <div class="dropdown">
+          <!-- we want 2 form to exchange btw rates-->
+          <!-- starting from form [from] as 1st layout-->
+          <div class="from">
+            <p>From</p>
+            <div class="select-container">
+              <img
+                src="https://flagsapi.com/US/shiny/64.png"
+                alt="United States Of America"
+              />
+              <select name="from"></select>
+            </div>
+          </div>
+
+          <!-- font icon for showing the exchange icon-->
+          <i class="fa-solid fa-arrow-right-arrow-left"></i>
+
+          <!-- starting from form [from] as 1st layout-->
+          <div class="to">
+            <p>To</p>
+            <div class="select-container">
+              <img src="https://flagsapi.com/PK/shiny/64.png" alt="Pakistan" />
+              <select name="to"></select>
+            </div>
+          </div>
+        </div>
+        <div class="message">1USD = 288PKR</div>
+        <button>Get Exchange Rate</button>
+      </form>
+    </div>
+  </body>
+</html>
