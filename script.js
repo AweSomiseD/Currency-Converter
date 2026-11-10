@@ -4,11 +4,13 @@ const BASE_URL =
 const FALLBACK_URL = "https://latest.currency-api.pages.dev/v1/currencies";
 
 const dropdowns = document.querySelectorAll(".dropdown select");
-const btn = document.querySelector("form button");
+const form = document.querySelector("form");
+const btn = document.querySelector(".submit-btn");
+const swapBtn = document.querySelector(".swap-btn");
 const fromCurrency = document.querySelector(".from select");
 const toCurrency = document.querySelector(".to select");
 const msg = document.querySelector(".message");
-const amountInput = document.querySelector(".ammount input");
+const amountInput = document.querySelector(".amount input");
 
 let latestRequest = 0;
 
@@ -74,13 +76,12 @@ const fetchRates = async (from) => {
 };
 
 // Get and display exchange rate
-
 const updateExchangeRate = async (convertAmount = false) => {
   const requestId = ++latestRequest;
 
   let amount = Number(amountInput.value);
 
-  if (isNaN(amount) || amount < 1) {
+  if (isNaN(amount) || amount <= 0) {
     amount = 1;
   }
 
@@ -88,6 +89,7 @@ const updateExchangeRate = async (convertAmount = false) => {
   let to = toCurrency.value;
 
   msg.innerText = "Fetching exchange rate...";
+  btn.disabled = true;
 
   try {
     let data = await fetchRates(from);
@@ -112,18 +114,33 @@ const updateExchangeRate = async (convertAmount = false) => {
 
     console.error("Currency conversion error:", error);
     msg.innerText = "Unable to fetch exchange rate. Please try again.";
+  } finally {
+    if (requestId === latestRequest) {
+      btn.disabled = false;
+    }
   }
 };
 
-// Get Exchange Rate button
-btn.addEventListener("click", (evt) => {
+// Get Exchange Rate (button click or Enter key)
+form.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
-  if (amountInput.value === "" || Number(amountInput.value) < 1) {
+  if (amountInput.value === "" || Number(amountInput.value) <= 0) {
     amountInput.value = "1";
   }
 
   updateExchangeRate(true);
+});
+
+// Swap currencies
+swapBtn.addEventListener("click", () => {
+  const temp = fromCurrency.value;
+  fromCurrency.value = toCurrency.value;
+  toCurrency.value = temp;
+
+  updateFlag(fromCurrency);
+  updateFlag(toCurrency);
+  updateExchangeRate(amountInput.value !== "");
 });
 
 // Initial exchange rate on page load
